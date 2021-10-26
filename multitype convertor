@@ -1,0 +1,47 @@
+#Enter a number
+num = int(input())
+binary = []
+octal = []
+hexa = []
+print("Deciamal :",num,"\n\n")
+def func_binary(num):
+ while num%2 ==0 or num%2 ==1:
+  rem = num%2
+  binary.append(rem)
+  num = num//2
+  if num == 1 or num == 0:
+   binary.append(num)
+   binary.reverse()
+   print("Binary : ",*binary,"\n\n")
+   break
+   
+def func_octal(num):
+ while num%8 <=8:
+  rem = num%8
+  octal.append(rem)
+  num = num//8
+  if num <=8:
+   octal.append(num)
+   octal.reverse()
+   print("Octal : ",*octal,"\n\n")
+   break
+ 
+def func_hex(num):
+ d = {10:"A",11:"B",12:"C",13:"D",14:"E",15:"F"}
+ while num%16 <=16:
+  rem = num%16
+  if num%16 < 16:
+   if num%16 <=9:
+    hexa.append(num%16)
+   if num%16 >=10:
+    hexa.append(d[num%16])
+   if num < 16: 
+    hexa.reverse()
+    print("Hexadecimal : ", *hexa)
+    break
+   num = num//16
+   
+func_binary(num)
+func_octal(num)
+func_hex(num)
+print(__doc__)
