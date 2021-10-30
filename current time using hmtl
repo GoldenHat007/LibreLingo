@@ -1,0 +1,151 @@
+<body><div id="all"><div id="date"></div><div id="clock"></div><div id="today"></div> </div>
+  <script type="text/javascript" charset="utf-8">
+   function printTime() {
+    var d = new Date();
+    var hr = d.getHours();
+    var min = d.getMinutes();
+    var sec = d.getSeconds();
+    var day = d.getDay();
+    var date = d.getDate();
+    var mon = d.getMonth()+1;
+    var yar = d.getFullYear();
+      
+      if (sec<10){
+        sec="0"+sec;
+      }
+      if (min<10){
+        min="0"+min;
+      }
+     
+       if (hr>11){
+        sec=sec+'<span style="font-size: 6vw;"> PM</span>'
+      }
+      else {
+        sec=sec+'<span style="font-size: 6vw;"> AM</span>'
+      }
+      
+      switch(hr){
+        case 0:
+          hr = 12;
+          break;
+          
+        case 13:
+          hr = 1;
+          break;
+          
+        case 14:
+          hr = 2;
+          break;
+          
+        case 15:
+          hr = 3;
+          break;
+          
+        case 16:
+          hr = 4;
+          break;
+          
+        case 17:
+          hr = 5;
+          break;
+          
+        case 18:
+          hr = 6;
+          break;
+          
+        case 19:
+          hr = 7;
+          break;
+          
+        case 20:
+          hr = 8;
+          break;
+          
+        case 21:
+          hr = 9;
+          break;
+          
+        case 22:
+          hr = 10;
+          break;
+          
+        case 23:
+          hr = 11;
+          break;
+      }
+        
+          document.getElementById("clock").innerHTML = hr+":"+min+":"+sec;
+      switch (day){
+        
+            case 0:
+                day = "Sunday";
+                break;
+            case 1:
+                day = "Monday";
+                break;
+            case 2:
+                day = "Tuesday";
+                break;
+            case 3:
+                day = "Wednesday";
+                break;
+            case 4:
+                day = "Thursday";
+                break;
+            case 5:
+                day = "Friday";
+                break;
+            case 6:
+                day = "Saturday";
+                break;
+           }
+    
+    if(day<10){
+            day = "0" + day;
+        }
+        if(mon<10){
+            
+            mon = "0" + mon;
+        }
+        
+    document.getElementById("date").innerHTML = date+"–"+mon+"–"+yar;
+    
+    document.getElementById("today").innerHTML = day;
+}
+setInterval(printTime);
+  </script>
+  
+ <style type="text/css" media="all">
+  
+  body {
+    padding: 0;
+    height: 100vh;
+    margin: 0vh;
+}
+    
+    #date{
+     text-align: center;
+     font-size: 4vw;
+     color: #787878;
+   }
+    .dt{
+     text-align: center;
+     font-size: 4vw;
+     color: red;
+    }
+   #clock{
+     text-align: center;
+     font-size: 15vw;
+   }
+   #today {
+     text-align: center;
+     font-size: 6vw;
+     color: #787878;
+   }
+  
+  img{
+      display: none;
+  }
+
+ </style>
+</body>
