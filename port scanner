@@ -1,0 +1,94 @@
+'''
+port_scanner using the python standard socket library
+
+***
+DISCLAIMER: This code is for educational purposes.  The code author or the hosting company assumes no responsibility for the codes misuse.
+***
+
+Scans a HOST on a TCP PORT and determines if it is OPEN or NOT REACHABLE
+
+usage:
+    first input: FQDN or IP of HOST to scan
+    second input: TCP PORT to probe
+    
+This code was written purposely to only allow one connection per execution.
+Scanning multiple ports sequentially or asynchronously can trigger alerts on Intrusion Detection Systems,
+and can result in criminal prosecution.  Scanning well-know ports singly (and not repeatedly) is advised.
+
+Some well-known ports to try:
+
+    Port Service
+    20   File Transfer Protocol (FTP) Data Transfer
+    21   File Transfer Protocol (FTP) Command Control
+    22   Secure Shell (SSH)
+    23   Telnet - Remote login service, unencrypted text messages
+    25   Simple Mail Transfer Protocol (SMTP) E-mail Routing
+    53   Domain Name System (DNS) service
+    80   Hypertext Transfer Protocol (HTTP) used in World Wide Web
+    110  Post Office Protocol (POP3) used by e-mail clients to retrieve e-mail from a server
+    123  Network Time Protocol (NTP)
+    143  Internet Message Access Protocol (IMAP) Management of Digital Mail
+    443  HTTP Secure (HTTPS) HTTP over TLS/SSL
+    465  SMTP Secure (SMTPS) - unofficial
+    587  SMTP Secure (SMTPS) using startTLS
+    
+REF:
+    https://docs.python.org/3/howto/sockets.html
+    https://www.studytonight.com/network-programming-in-python
+    https://stackoverflow.com/questions/26174743/making-a-fast-port-scanner
+
+ Happy Coding!  😎👍    
+'''
+import socket
+
+# Define some defaults
+TIMEOUT = 0.5
+SUCCESS = 0
+
+# request user input for HOST and PORT
+HOST = input('Host to scan: ') or 'www.google.com'
+PORT = input('\nPort to scan: ') or '80'
+
+def scanner(*host_port, timeout=TIMEOUT):
+    '''
+    Connect to a specified HOST on a specified PORT.
+    If the connection takes longer then the TIMEOUT, 
+    assume the HOST is NOT REACHABLE. 
+    If the connection is a SUCCESS, 
+    assume the HOST is up and listening on the PORT. 
+    If the connection fails for any other reason, 
+    assume the HOST is down and the PORT is NOT REACHABLE.
+    '''
+    
+    # Create and configure the socket.
+    SOCK = socket.socket()
+    SOCK.settimeout(timeout)
+
+    # the SO_REUSEADDR flag tells the kernel to reuse a local 
+    # socket in a TIME_WAIT state, without waiting for its natural
+    # TIMEOUT to expire.
+    SOCK.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+    # Like connect(address), but return an error indicator instead
+    # of raising an exception for errors returned by the connect() 
+    # call (other problems, such as “host not found,” can still raise exceptions). 
+    # The error indicator is 0 if the operation succeeds, 
+    # otherwise returns the value of the errnovariable.
+    connected = SOCK.connect_ex(host_port) is SUCCESS
+
+    # Mark the socket closed.
+    # Once this happens, all future operations on the socket object will fail. 
+    # The remote end will receive no more data (after queued data is flushed).
+    SOCK.close()
+
+    # return True if port is open or False if port is closed.
+    return connected
+
+# capture state returned from function in a scan variable
+scan = scanner(HOST, int(PORT))
+
+# output result
+if(scan is True):
+    print(f'\nPort {PORT} on {HOST} is UP.')
+else:
+    print(f'\nPort {PORT} on {HOST} is NOT REACHABLE.')
