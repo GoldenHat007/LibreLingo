@@ -1,0 +1,50 @@
+# type help for more....
+#       INPUT FORMAT:
+# <<<<----------------->>>>> 
+# The program is capable of solving input of this format:
+# 1. x * x + x % x - x
+# 2. sqrt(x) + cos(x) / tan(x) + 2 * pi
+#  and so on... All in a single line.
+# you can also use methods like:
+# e.g factorial(5)*x, sin(20), pow(2, 2)*6 e.t.c
+from sys import exit
+from math import *
+import base64
+    
+def calc(exp):
+    global operators, errors
+    if exp == 'help':
+        print(base64.b64decode(ppp).decode('utf-8'))
+        help(__import__('math'))
+        return exit()
+    if exp.isalpha() == True:
+        print(errors[1])
+        return exit()
+    if not any([x in exp for i,x in enumerate(operators)]):
+        print(errors[1])
+        return exit()
+    if not any([x in exp for i,x in enumerate(list(map(str, range(0,11))))]):
+        print(errors[0])
+        return exit()
+    else:
+        try:
+            return (
+                '       CALCULATIONS   \n'
+                '<<<<------------------->>>\n'
+                f'>>> EXPRESSION : {exp}\n'
+                f'>>> RESULT     : {eval(exp)}\n\n'
+                )
+        except (SyntaxError, NameError):
+            print(errors[0])
+            return exit()
+
+operators = ['+','/','//','*','%','-']
+errors = [
+    '>>>    Syntax Error',
+    '>>>    Bad input using default!',
+    '>>>    Math Error'
+    ]
+ppp = '''QXV0aG9yIDogQ2JyCkRhdGUgICA6IFNlcHRlbWJlciwgMjAxOQpUaXRsZSAgOiBTY2llbnRpZmljIGNhbGN1bGF0b3IKCiAgICAgSU5QVVQgRk9STUFUOgo8PDw8LS0tLS0tLS0tLS0tLS0tLS0+Pj4+PiAKVGhlIHByb2dyYW0gaXMgY2FwYWJsZSBvZiBzb2x2aW5nIGlucHV0IG9mIHRoaXMgZm9ybWF0OgoxLiB4ICogeCArIHggJSB4IC0geAoyLiBzcXJ0KHgpICsgY29zKHgpIC8gdGFuKHgpICsgMiAqIHBpCiBhbmQgc28gb24uLi4gQWxsIGluIGEgc2luZ2xlIGxpbmUuCgoKV0hFUkUgICA+Pj4+Pj46CgpzcXJ0ICA9IHNxdWFyZSByb290ID4+PiBzcXJ0KHgpCnRhbiAgID0gdGFuICAgICA+Pj4gdGFuKHgpCnBpICAgID0gMy4xNCAgICA+Pj4gcGkgKiB4CmUgICAgID0gMi4xNyAgICA+Pj4gZSAqIHgKc2luICAgPSBzaW4gICAgID4+PiBzaW4oeCkKKiogICAgPSBwb3cgICAgID4+PiB4Kip5CmUudC5jCgogICAgIFJFQUQgTU9SRQo8PDwtLS0tLS0tLS0tLS0tLT4+Pj4K'''
+inp = input('Input a Mathematical expression :\ne.g 2*sin(20)+factorial(5)/45\nor simply...\n3*3+3+6+2+5%6\nAll in a single line\n\nyou can also type help for more\n\n')
+print(calc(inp))
+    
